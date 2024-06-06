@@ -464,17 +464,20 @@ def matrix_to_xyz_ypr(matrix, csv_file="output.csv"):
 
 
 if __name__ == "__main__":
-    save_path = "/home/akshay/Research/sonar_slam_eval2/Eval/Easy/SONIC/"
-    model_path = "/home/akshay/Research/sonar_slam_eval2/resnet34_64dim/130000.pth"
-    pairs_path = "/home/akshay/Research/training/"
+    # save_path = "/home/akshay/Research/sonar_slam_eval2/Eval/Easy/SONIC/"
+    save_path = "/shared/SONIC_OUT/"
+    # model_path = "/home/akshay/Research/sonar_slam_eval2/resnet34_64dim/130000.pth"
+    model_path = "/shared/pretrained/SONIC_pretrained.pth"
+    # pairs_path = "/home/akshay/Research/training/"
+    pairs_path = "/shared/"
 
     imf1s_ = []
     imf2s_ = []
     pos1s_= []
     pos2s_= []
 
-    img_folder = os.path.join(pairs_path,'logs/pairs_eval_easy_fixed.txt')
-    pose_folder = os.path.join(pairs_path,'logs/pairs_pos_eval_easy_fixed.txt')
+    img_folder = os.path.join(pairs_path,'logs/test_pairs_val_SHIP.txt')
+    pose_folder = os.path.join(pairs_path,'logs/test_pairs_pos_SHIP.txt')
 
     if os.path.exists(img_folder):
         f = open(img_folder, 'r')
