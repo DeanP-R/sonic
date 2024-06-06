@@ -147,7 +147,7 @@ def generate_query_kpts(img, mode=None, num_pts=None, akaze_pts=None, akaze_supe
 
     #initialize superpoint
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    superpoint = SuperPointFrontend(weights_path='/home/akshay/Research/sonar_slam_eval2/src/two_view/superpoint_v1.pth', nms_dist=4, conf_thresh=0.015, nn_thresh=0.7, cuda=torch.cuda.is_available())
+    superpoint = SuperPointFrontend(weights_path='/shared/pretrained/superpoint_v1.pth', nms_dist=4, conf_thresh=0.015, nn_thresh=0.7, cuda=torch.cuda.is_available())
     #initialize akaze
     a = cv2.AKAZE_create()
 
