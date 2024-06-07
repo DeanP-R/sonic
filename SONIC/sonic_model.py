@@ -204,7 +204,7 @@ class SONICModel():
             # writer.add_image('Image', x, n_iter)
     
     def load_model(self, filename):
-        to_load = torch.load(filename)
+        to_load = torch.load(filename, map_location=torch.device('cpu'))
         self.model.load_state_dict(to_load['state_dict'])
         if 'optimizer' in to_load.keys():
             self.optimizer.load_state_dict(to_load['optimizer'])
