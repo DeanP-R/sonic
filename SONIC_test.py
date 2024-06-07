@@ -188,13 +188,14 @@ def expectation_matching(img1_path, img2_path,pose1_path,pose2_path, model_path,
     caps = sonic_model.SONICModel(args)
     
     caps.load_model(model_path)
-    s1 = torch.from_numpy(s1.copy()).unsqueeze(0).cuda()
-    s2 = torch.from_numpy(s2.copy()).unsqueeze(0).cuda()
-    s1_kpts = torch.from_numpy(s1_kpts.copy()).int().unsqueeze(0).cuda()
-    s2_kpts = torch.from_numpy(s2_kpts.copy()).int().unsqueeze(0).cuda()
+    s1 = torch.from_numpy(s1.copy()).unsqueeze(0)#.cuda()
+    s2 = torch.from_numpy(s2.copy()).unsqueeze(0)#.cuda()
+    s1_kpts = torch.from_numpy(s1_kpts.copy()).int().unsqueeze(0)#.cuda()
+    s2_kpts = torch.from_numpy(s2_kpts.copy()).int().unsqueeze(0)#.cuda()
     min_kpts = min(s1_kpts.shape[1], s2_kpts.shape[1])
     s1_kpts = s1_kpts[:, :min_kpts, :]
     s2_kpts = s2_kpts[:, :min_kpts, :]
+
     out_dict = caps.model.forward(s1, s2, s1_kpts)
     std_f = out_dict["std_f"].squeeze(0).detach().cpu().numpy()
     std_c = out_dict["std_c"].squeeze(0).detach().cpu().numpy()
@@ -476,17 +477,30 @@ if __name__ == "__main__":
     pos1s_= []
     pos2s_= []
 
-    img_folder = os.path.join(pairs_path,'logs/test_pairs_val_SHIP.txt')
+    img_folder = os.path.join(pairs_path,'logs/test_pairs_train.txt')
+    # shape returns (batch, length,)
+    # test_pairs_SHIP.txt           Shapes s1 & s2 sizes: (torch.Size([1, 512, 512]), torch.Size([1, 512, 512]))
+    # test_pairs_pos_val_SHIP.txt   Shapes s1 & s2 sizes: (torch.Size([1, 4, 4]), torch.Size([1, 4, 4]))
+    # test_pairs_val_SHIP.txt       Shapes s1 & s2 sizes: (torch.Size([1, 512, 512]), torch.Size([1, 512, 512]))
+    # test_pairs_meta_SHIP.txt      ValueError: Object arrays cannot be loaded when allow_pickle=False
+    # test_pairs_meta_val.txt       ValueError: Object arrays cannot be loaded when allow_pickle=False
+    # test_pairs_train.txt          Shapes s1 & s2 sizes: (torch.Size([1, 512, 512]), torch.Size([1, 512, 512]))
+    # test_pairs_meta_train.txt     ValueError: Object arrays cannot be loaded when allow_pickle=False
+    # test_pairs_pos_val.txt        ValueError: Expected more than 1 value per channel when training, got input size torch.Size([1, 64, 1, 1])
+    # test_pairs_val.txt            Shapes s1 & s2 sizes: (torch.Size([1, 512, 512]), torch.Size([1, 512, 512]))
     pose_folder = os.path.join(pairs_path,'logs/test_pairs_pos_SHIP.txt')
 
-    if os.path.exists(img_folder):
+    if not os.path.exists(img_folder):
+        raise FileNotFoundError('img_folder path incorrect')
+    else:
         f = open(img_folder, 'r')
-
-    if os.path.exists(img_folder):
         f_same = open(img_folder, 'r')
 
-    if os.path.exists(pose_folder):
+    if not os.path.exists(pose_folder):
+        raise FileNotFoundError('pose_folder path incorrect')
+    else:
         p_val = open(pose_folder,'r')
+
     perc = []
     mean_ = []
     std_ = []
