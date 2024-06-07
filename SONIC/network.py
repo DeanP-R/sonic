@@ -192,13 +192,17 @@ class SONICNet(nn.Module):
             return expected_coord2_n
 
     def forward(self, im1, im2, coord1):
- 
+        print("Shape of im1 at start of forward:", im1.shape)
+        print("Shape of im2 at start of forward:", im2.shape)
+
         xc1, xf1 = self.net(im1)
         xc2, xf2 = self.net(im2)
 
+        
+
         #image width and height
-        h1i, w1i = im1.size()[2:]
-        h2i, w2i = im2.size()[2:]
+        h1i, w1i = im1.size()[1:]
+        h2i, w2i = im2.size()[1:]
         
         coord1_n = self.normalize(coord1, h1i, w1i)
         # find the feature descriptors for the coarse feature locations which
