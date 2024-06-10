@@ -463,6 +463,27 @@ def matrix_to_xyz_ypr(matrix, csv_file="output.csv"):
     return x, y, z, yaw, pitch, roll
 
 
+"""
+Shared folder desired layout
+.
+├── shared
+    ├── logs
+        ├── SHIP_BPL_H3
+        ├── test_pairs_SHIP.txt
+        ├── test_pairs_pos_val_SHIP.txt
+        ├── test_pairs_val_SHIP.txt
+        ├── test_pairs_train.txt
+        ├── test_pairs_val.txt
+        ├── test_pairs_pos_SHIP.txt
+        └── test_pairs_val_SHIP.txt
+    ├── pretrained
+        ├── SONIC_pretrained.pth
+        └── superpoint.pth
+├── sonic
+    └──...
+"""
+
+
 
 if __name__ == "__main__":
     # save_path = "/home/akshay/Research/sonar_slam_eval2/Eval/Easy/SONIC/"
@@ -480,14 +501,13 @@ if __name__ == "__main__":
     img_folder = os.path.join(pairs_path,'logs/test_pairs_train.txt')
     # shape returns (batch, length,)
     # test_pairs_SHIP.txt           Shapes s1 & s2 sizes: (torch.Size([1, 512, 512]), torch.Size([1, 512, 512]))
-    # test_pairs_pos_val_SHIP.txt   Shapes s1 & s2 sizes: (torch.Size([1, 4, 4]), torch.Size([1, 4, 4]))
+    # test_pairs_pos_val_SHIP.txt   Shapes s1 & s2 sizes: (torch.Size([1, 4, 4]),     torch.Size([1, 4, 4]))
     # test_pairs_val_SHIP.txt       Shapes s1 & s2 sizes: (torch.Size([1, 512, 512]), torch.Size([1, 512, 512]))
-    # test_pairs_meta_SHIP.txt      ValueError: Object arrays cannot be loaded when allow_pickle=False
-    # test_pairs_meta_val.txt       ValueError: Object arrays cannot be loaded when allow_pickle=False
     # test_pairs_train.txt          Shapes s1 & s2 sizes: (torch.Size([1, 512, 512]), torch.Size([1, 512, 512]))
-    # test_pairs_meta_train.txt     ValueError: Object arrays cannot be loaded when allow_pickle=False
-    # test_pairs_pos_val.txt        ValueError: Expected more than 1 value per channel when training, got input size torch.Size([1, 64, 1, 1])
     # test_pairs_val.txt            Shapes s1 & s2 sizes: (torch.Size([1, 512, 512]), torch.Size([1, 512, 512]))
+    # test_pairs_pos_SHIP.txt       
+    # test_pairs_val_SHIP.txt       
+    
     pose_folder = os.path.join(pairs_path,'logs/test_pairs_pos_SHIP.txt')
 
     if not os.path.exists(img_folder):
